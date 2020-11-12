@@ -1,0 +1,11 @@
+#Download and open SharePoint online management shell from here
+#Connect to SharePoint Online
+Connect-SPOService -Url https://<tenant>-admin.sharepoint.com/ 
+#create variable to store all deleted sites
+$delsites = Get-SPODeletedSite -IncludePersonalSite -limit ALL
+#retrieve number of Deleted sites
+$delsites.count 
+#delete each Personal site Url without confirmation
+foreach($delsite in $delsites) {
+Remove-SPODeletedSite -Identity $delsite.Url -Confirm:$false 
+}
